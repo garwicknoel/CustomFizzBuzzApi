@@ -13,7 +13,7 @@ public class CustomFizzBuzzController : ControllerBase
     private readonly ICustomFizzBuzzService _customFizzBuzzService;
 
     public CustomFizzBuzzController(CustomFizzBuzzLoggerContext loggerContext
-        ,ICustomFizzBuzzService customFizzBuzzService)
+        , ICustomFizzBuzzService customFizzBuzzService)
     {
         _loggerContext = loggerContext;
         _customFizzBuzzService = customFizzBuzzService;
@@ -41,29 +41,4 @@ public class CustomFizzBuzzController : ControllerBase
             }
         }
     }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<CustomFizzBuzzRequestDTO>> GetTodoItem(long id)
-    {
-        var customFizzBuzzRequest = await _loggerContext.CustomFizzBuzzRequestItems.FindAsync(id);
-
-        if (customFizzBuzzRequest == null)
-        {
-            return NotFound();
-        }
-
-        return ItemToDTO(customFizzBuzzRequest);
-    }
-
-    /*private bool CustomFizzBuzzRequestItemExists(long id)
-    {
-        return _context.CustomFizzBuzzRequestItems.Any(e => e.Id == id);
-    }*/
-
-    private static CustomFizzBuzzRequestDTO ItemToDTO(CustomFizzBuzzRequestModel customFizzBuzzRequest) =>
-       new CustomFizzBuzzRequestDTO
-       {
-           MaxNumber = customFizzBuzzRequest.MaxNumber,
-           ReplacementWords = customFizzBuzzRequest.ReplacementWords
-       };
 }
